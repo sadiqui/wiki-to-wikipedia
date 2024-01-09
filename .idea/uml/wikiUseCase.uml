@@ -1,0 +1,54 @@
+@startuml
+
+left to right direction
+
+actor User as U
+actor Admin as A
+actor Author as Au
+
+rectangle System {
+  usecase Register
+  usecase Login
+  usecase CreateCategory
+  usecase UpdateCategory
+  usecase DeleteCategory
+  usecase CreateTag
+  usecase UpdateTag
+  usecase DeleteTag
+  usecase ArchiveWiki
+  usecase CreateWiki
+  usecase UpdateWiki
+  usecase DeleteWiki
+  usecase SearchWiki
+  usecase DisplayLatestWikis
+  usecase DisplayLatestCategories
+  usecase RedirectToSingleWikiPage
+  usecase ViewStatistics
+  usecase DisplayDetails
+}
+
+U --> (Register)
+U --> (Login)
+U --> (SearchWiki)
+U --> (DisplayLatestWikis)
+U --> (DisplayLatestCategories)
+U --> (RedirectToSingleWikiPage)
+U --> (DisplayDetails)
+
+U --> A : <<include>>
+U --> Au : <<include>>
+
+A --> (CreateCategory)
+A --> (UpdateCategory)
+A --> (DeleteCategory)
+A --> (CreateTag)
+A --> (UpdateTag)
+A --> (DeleteTag)
+A --> (ArchiveWiki)
+A --> (ViewStatistics)
+
+Au --> (CreateWiki)
+Au --> (UpdateWiki)
+Au --> (DeleteWiki)
+
+@enduml

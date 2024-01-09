@@ -1,0 +1,126 @@
+@startuml
+
+actor User as U
+actor Admin as A
+actor Author as Au
+participant System as S
+
+U -> S: Register
+activate S
+S --> U: Registration Successful
+deactivate S
+
+U -> S: Login
+activate S
+S --> U: Authentication Successful
+deactivate S
+
+U -> S: SearchWiki
+activate S
+S -> S: Perform search
+S --> U: List of matching Wikis
+deactivate S
+
+U -> S: DisplayLatestWikis
+activate S
+S -> S: Retrieve latest Wikis
+S --> U: List of latest Wikis
+deactivate S
+
+U -> S: RedirectToSingleWikiPage
+activate S
+S -> S: Retrieve Wiki details
+S --> U: Wiki details
+deactivate S
+
+U -> A: CreateCategory
+activate A
+A -> S: Request to create category
+activate S
+S -> S: Validate and create category
+S --> A: Category created successfully
+deactivate S
+deactivate A
+
+U -> A: UpdateCategory
+activate A
+A -> S: Request to update category
+activate S
+S -> S: Validate and update category
+S --> A: Category updated successfully
+deactivate S
+deactivate A
+
+U -> A: DeleteCategory
+activate A
+A -> S: Request to delete category
+activate S
+S -> S: Validate and delete category
+S --> A: Category deleted successfully
+deactivate S
+deactivate A
+
+U -> A: CreateTag
+activate A
+A -> S: Request to create tag
+activate S
+S -> S: Validate and create tag
+S --> A: Tag created successfully
+deactivate S
+deactivate A
+
+U -> A: UpdateTag
+activate A
+A -> S: Request to update tag
+activate S
+S -> S: Validate and update tag
+S --> A: Tag updated successfully
+deactivate S
+deactivate A
+
+U -> A: DeleteTag
+activate A
+A -> S: Request to delete tag
+activate S
+S -> S: Validate and delete tag
+S --> A: Tag deleted successfully
+deactivate S
+deactivate A
+
+U -> A: ArchiveWiki
+activate A
+A -> S: Request to archive wiki
+activate S
+S -> S: Validate and archive wiki
+S --> A: Wiki archived successfully
+deactivate S
+deactivate A
+
+U -> Au: CreateWiki
+activate Au
+Au -> S: Request to create wiki
+activate S
+S -> S: Validate and create wiki
+S --> Au: Wiki created successfully
+deactivate S
+deactivate Au
+
+U -> Au: UpdateWiki
+activate Au
+Au -> S: Request to update wiki
+activate S
+S -> S: Validate and update wiki
+S --> Au: Wiki updated successfully
+deactivate S
+deactivate Au
+
+U -> Au: DeleteWiki
+activate Au
+Au -> S: Request to delete wiki
+activate S
+S -> S: Validate and delete wiki
+S --> Au: Wiki deleted successfully
+deactivate S
+deactivate Au
+
+@enduml

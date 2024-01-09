@@ -1,0 +1,109 @@
+@startuml
+
+class User {
+  - id: int
+  - email: string
+  - password: string
+  - username: string
+
+  + register(username: string, email: string, password: string)
+  + login(email: string, password: string)
+}
+
+class Admin extends User {
+  + createCategory(name: string)
+  + updateCategory(category: Category)
+  + deleteCategory(category: Category)
+  + createTag(name: string)
+  + updateTag(tag: Tag)
+  + deleteTag(tag: Tag)
+  + archiveWiki(wiki: Wiki)
+}
+
+class Author extends User {
+  + createWiki(title: string, content: string, category: Category, tags: List<Tag>)
+  + updateWiki(wiki: Wiki, title: string, content: string, category: Category, tags: List<Tag>)
+  + deleteWiki(wiki: Wiki)
+}
+
+class Category {
+  - id: int
+  - name: string
+
+  + getName(): string
+}
+
+class Tag {
+  - id: int
+  - name: string
+
+  + getName(): string
+}
+
+class Wiki {
+  - id: int
+  - title: string
+  - content: string
+  - author: Author
+  - category: Category
+
+  + getTitle(): string
+  + getContent(): string
+  + getAuthor(): Author
+  + getCategory(): Category
+}
+
+Admin "1" -- "" User
+Author "n" -- "" User
+
+Admin "1" -- "n" Category: Manages
+Admin "1" -- "n" Tag: Manages
+Admin "0..n" -- "0..n" Wiki: Archives
+
+Author "1" -- "n" Wiki: Creates
+
+Category "1" -- "n" Wiki: Categorizes
+Tag "n" -- "n" Wiki
+
+@enduml
+
+
+
+
+
+
+
+
+
+------- (draft) :
+
+class Dashboard {
+  + viewStatistics()
+}
+
+class FrontOffice {
+  + searchWiki(query: string): List<Wiki>
+  + displayLatestWikis(): List<Wiki>
+  + displayLatestCategories(): List<Category>
+  + redirectToSingleWikiPage(wiki: Wiki)
+}
+
+class HomePage {
+  + displayLatestWikis(): List<Wiki>
+  + displayLatestCategories(): List<Category>
+}
+
+class SingleWikiPage {
+  + displayDetails(wiki: Wiki)
+}
+
+class WikiTag {
+  - wiki_id: int
+  - tag_id: int
+}
+
+FrontOffice "1" -- "1" HomePage: Uses
+FrontOffice "1" -- "1" SingleWikiPage: Uses
+
+Admin "1" -- "1" User
+Author "1" -- "n" User
