@@ -1,28 +1,27 @@
 <?php include("includes/header.php"); ?>
 
 <?php
-    $message = "";
-    if (isset($_POST['submit'])) {
-	
-	    $username = $_POST["username"];
-		$password = $_POST["password"];
+$message = "";
+if (isset($_POST['submit'])) {
 
-		if ($logged_in = User::authenticate_admin($username, $password)) {
-		    $session->admin_logged_in($username);
-		    redirect_to("admin.php");
-		} 
-		else {
-		    $message = "logged In failed. Please try again";
-		}
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-	}
+    if ($logged_in = User::authenticate_admin($username, $password)) {
+        $session->admin_logged_in($username);
+        redirect_to("admin.php");
+    } else {
+        $message = "logged In failed. Please try again";
+    }
 
-	?>
+}
+
+?>
 
 <div id="wrapper">
     <div id="header" class="clearfix">
         <div id="header_logo">
-            <img src="images/logo.png" alt="Wiki logo">
+            <img src="public/img/logo.png" alt="Wiki logo">
         </div>
         <div id="admin_header_log_in" class="large">
             <p>Welcome admin user</p>
@@ -55,7 +54,9 @@
                 </p>
                 <input type="submit" name="submit" value="Log In" />
             </form>
-            <p><?php echo $message ?></p><br>
+            <p>
+                <?php echo $message ?>
+            </p><br>
             <p>Not an Admin ? <a href="log_in_user.php">Log in as User.</a></p>
         </div>
     </div>

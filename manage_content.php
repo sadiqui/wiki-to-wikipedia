@@ -1,19 +1,21 @@
 <?php include("includes/header.php"); ?>
 
-<?php 
-    if (!isset($_SESSION['admin_user'])) {
-	    redirect_to("log_in_admin.php");
-	}
+<?php
+if (!isset($_SESSION['admin_user'])) {
+    redirect_to("log_in_admin.php");
+}
 
 ?>
 
 <div id="wrapper">
     <div id="header" class="clearfix">
         <div id="header_logo">
-            <img src="images/logo.png" alt="Wiki logo">
+            <img src="public/img/logo.png" alt="Wiki logo">
         </div>
         <div id="admin_header_log_in" class="large">
-            <p>Welcome <?php echo $_SESSION['admin_user'] ?> to Wiki Cockpit !</p>
+            <p>Welcome
+                <?php echo $_SESSION['admin_user'] ?> to Wiki Cockpit !
+            </p>
         </div>
 
     </div>
@@ -33,12 +35,14 @@
         </div>
         <div id="main_content">
             <h2>Content Management</h2>
-            <div><?php
-			     if (isset($_SESSION['message'])) {
-					    echo $_SESSION['message'];
-						$session->delete_message();
-					} 
-				?></div>
+            <div>
+                <?php
+                if (isset($_SESSION['message'])) {
+                    echo $_SESSION['message'];
+                    $session->delete_message();
+                }
+                ?>
+            </div>
             <br />
             <ul>
                 <li><a href="add_page.php">Add Page</a></li><br>

@@ -44,7 +44,7 @@
 			<div class="page_row clearfix" >
 				<div class="page_images">
 				    <?php if($image_filename = Image::get_page_image($db, $product["page_id"])) { ?>
-						<img src="uploads/images/<?php echo $image_filename  ?>" alt="home_page_image" />
+						<img src="public/img/<?php echo $image_filename  ?>" alt="home_page_image" />
                     <?php } ?>
 				</div>
 				<div class="page_desc">

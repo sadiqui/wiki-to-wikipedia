@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 <div id="wrapper">
     <div id="header" class="clearfix">
         <div id="header_logo">
-            <img src="images/logo.png" alt="Wiki logo">
+            <img src="public/img/logo.png" alt="Wiki logo">
         </div>
         <div id="admin_header_log_in" class="large">
             <p>Welcome
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
                         <label for="page_desc">Wiki Description</label>
                     </div>
                     <div class="form_right">
-                        <textarea name="page_desc" rows="2" cols="98" value=""
+                        <textarea name="page_desc" rows="2" cols="40" value=""
                             id="page_desc"><?php if (isset($_POST['page_desc'])) {
                                 echo $_POST['page_desc'];
                             } ?></textarea>
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
                         <label for="email">Wiki Content</label>
                     </div>
                     <div class="form_right">
-                        <textarea name="page_content" rows="15" cols="35" value="" id="page_content" />
+                        <textarea name="page_content" rows="20" cols="35" value="" id="page_content" />
                         <?php if (isset($_POST['page_content'])) {
                             echo $_POST['page_content'];
                         } ?></textarea>

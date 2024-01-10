@@ -1,23 +1,22 @@
 <?php include("includes/header.php"); ?>
 
 <?php
-    $db = new MySql_database();
+$db = new MySql_database();
 
-	$message = "";
-    if (isset($_POST['submit'])) {
+$message = "";
+if (isset($_POST['submit'])) {
 
-		$username = $_POST["username"];
-		$password = $_POST["password"];
+	$username = $_POST["username"];
+	$password = $_POST["password"];
 
-		if ($logged_in = User::authenticate_user($db,$username, $password)) {
-		    $session->user_logged_in($username);
-		    redirect_to("index.php");
-		} 
-		else {
-		    $message = "logged In failed. Please try again";
-		}
-
+	if ($logged_in = User::authenticate_user($db, $username, $password)) {
+		$session->user_logged_in($username);
+		redirect_to("index.php");
+	} else {
+		$message = "logged In failed. Please try again";
 	}
+
+}
 
 ?>
 
@@ -32,7 +31,7 @@
 
 		<div id="main_content">
 			<h2>Log In</h2>
-			<br/>
+			<br />
 			<form action="log_in_user.php" method="post">
 				<p>Username:
 					<input type="text" name="username" value="" />
@@ -41,10 +40,12 @@
 					<input type="password" name="password" value="" />
 				</p>
 				<input type="submit" name="submit" value="Log In" />
-			</form>	
-            <p><?php echo $message ?></p><br>
+			</form>
+			<p>
+				<?php echo $message ?>
+			</p><br>
 			<p>An Admin ? <a href="log_in_admin.php">Log in as Admin.</a></p>
 		</div>
 	</div>
 
-<?php include("includes/footer.php"); ?>
+	<?php include("includes/footer.php"); ?>
