@@ -34,6 +34,11 @@ input {
 	padding: 7px;
 }
 
+.right {
+	display: block;
+	text-align: right;
+}
+
 .small {
 	display: block;
 	font-size: small;
@@ -259,7 +264,7 @@ User pages
 	float: right;
 	margin-right: 30px;
 	margin-top: 30px;
-	line-height: 2em;
+	line-height: 3em;
 }
 
 #main_content {
@@ -296,7 +301,9 @@ User pages
 	color: #ff0000;
 }
 
-#left_nav {}
+#left_nav {
+	margin-top: -30px;
+}
 
 #left_nav ul li {
 	background-color: #b0c4de;

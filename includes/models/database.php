@@ -80,13 +80,13 @@ class MySql_database
 
 	public function escape_value($value)
 	{
-		if ($this->real_escape_string_exists) { // PHP v4.3.0 or higher
+		if ($this->real_escape_string_exists) {
 			// undo any magic quote effects so mysql_real_escape_string can do the work
 			if ($this->magic_quotes_active) {
 				$value = stripslashes($value);
 			}
 			$value = mysqli_real_escape_string($this->mysqli, $value);
-		} else { // before PHP v4.3.0
+		} else {
 			// if magic quotes aren't already on then add slashes manually
 			if (!$this->magic_quotes_active) {
 				$value = addslashes($value);

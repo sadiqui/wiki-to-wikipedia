@@ -6,35 +6,34 @@ $db = new MySql_database();
 if (isset($_POST['submit'])) {
 	$search_key = $_POST['search_text'];
 
-	$sql = "SELECT * ";
-	$sql .= "FROM pages ";
-	$sql .= "WHERE page_desc LIKE '%{$search_key}%' ";
-	$sql .= "OR page_name LIKE '%{$search_key}%' ";
-	$sql .= "ORDER BY page_id DESC ";
+	$search_key = trim($search_key);
+	$search_key = preg_replace('/[\/,;]+/', '', $search_key);
 
-	@$search_set = $db->query($sql);
+	if (!empty($search_key)) {
+		$sql = "SELECT * ";
+		$sql .= "FROM pages ";
+		$sql .= "WHERE page_desc LIKE '%{$search_key}%' ";
+		$sql .= "OR page_name LIKE '%{$search_key}%' ";
+		$sql .= "ORDER BY page_id DESC ";
 
+		$search_set = $db->query($sql);
+	} else {
+		$search_set = false;
+	}
 } else {
 	redirect_to("index.php");
-
 }
-
 ?>
 
 <div id="wrapper">
 	<?php include("includes/user_header.php"); ?>
 
 	<div id="content" class="clearfix">
-
 		<?php include("includes/top_nav.php"); ?>
-
 		<?php include("includes/left_column.php"); ?>
 
 		<div id="main_content">
-			<?php if (!$search_set) { ?>
-				<p>No search results found</p>
-			<?php } else { ?>
-
+			<?php if ($search_set && $db->num_rows($search_set) > 0) { ?>
 				<?php while ($search_item = $db->fetch_assoc_array($search_set)) { ?>
 					<div class="page_row clearfix">
 						<div class="page_images">
@@ -58,13 +57,11 @@ if (isset($_POST['submit'])) {
 						</div>
 					</div>
 					<hr />
-
 				<?php }
-			} ?>
-
+			} else { ?>
+				<p>No search results found</p>
+			<?php } ?>
 		</div>
-
-
 	</div>
 
 	<?php include("includes/footer.php"); ?>

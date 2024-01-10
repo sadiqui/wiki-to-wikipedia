@@ -6,12 +6,12 @@
 		        <?php if ( isset ($_SESSION["user"]) ) { ?>
 
 					<p class="large">Welcome <?php echo $_SESSION['user'] ?> to Wiki !</p>
-					<p><a href="log_out_user.php" class="small">Log Out</a></p>
+					<p><a href="log_out_user.php" class="right">Log Out</a></p>
 
 				<?php } elseif ( isset ($_SESSION["admin_user"]) ) { ?>
 
 				    <p>Welcome <?php echo $_SESSION['admin_user'] ?> to Wiki Cockpit !</p>
-                    <p><a href="log_out_admin.php" class="small">Log Out</a></p>
+                    <p><a href="log_out_admin.php" class="right">Log Out</a></p>
 
 				<?php	} else {
 				?>
