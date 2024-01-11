@@ -1,6 +1,6 @@
 <?php
     ob_start();
-    require_once("initialize.php");
+    require_once("../app/config/initialize.php");
 
 ?>
 
@@ -20,12 +20,12 @@
     <!-- general information about the site creator and creation -->
     <meta name="author" content="abdelilah sadiqui, YouCode" />
 
-    <link href="public/img/wiki-icon.png" rel="icon">
-    <link href="public/img/wiki-icon.png" rel="apple-touch-icon">
+    <link href="../public/img/wiki-icon.png" rel="icon">
+    <link href="../public/img/wiki-icon.png" rel="apple-touch-icon">
 
     <!-- stylesheets -->
-    <link type="text/css" rel="stylesheet" href="public/css/reset.css" />
-    <link type="text/css" rel="stylesheet" href="public/css/main.css" />
+    <link type="text/css" rel="stylesheet" href="../public/css/reset.css" />
+    <link type="text/css" rel="stylesheet" href="../public/css/main.css" />
 
     <!--[if lt IE 8]>
 			<style>

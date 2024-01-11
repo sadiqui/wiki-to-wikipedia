@@ -12,8 +12,10 @@ if (isset($_POST['submit'])) {
 	if (!empty($search_key)) {
 		$sql = "SELECT * ";
 		$sql .= "FROM pages ";
-		$sql .= "WHERE page_desc LIKE '%{$search_key}%' ";
-		$sql .= "OR page_name LIKE '%{$search_key}%' ";
+		$sql .= "WHERE CONCAT(' ', page_desc, ' ') LIKE '% {$search_key} %' ";
+        $sql .= "OR CONCAT(' ', page_name, ' ') LIKE '% {$search_key} %' ";
+		// $sql .= "WHERE page_desc LIKE '%{$search_key}%' ";
+		// $sql .= "OR page_name LIKE '%{$search_key}%' ";
 		$sql .= "ORDER BY page_id DESC ";
 
 		$search_set = $db->query($sql);
@@ -38,7 +40,7 @@ if (isset($_POST['submit'])) {
 					<div class="page_row clearfix">
 						<div class="page_images">
 							<?php if ($image_filename = Image::get_page_image($db, $search_item["page_id"])) { ?>
-								<img src="public/img/<?php echo $image_filename ?>" alt="home_page_image" />
+								<img src="../public/img/<?php echo $image_filename ?>" alt="home_page_image" />
 							<?php } ?>
 						</div>
 						<div class="page_desc">

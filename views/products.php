@@ -5,22 +5,22 @@ $db = new MySql_database();
 
 $page = !empty($_GET['page']) ? (int) $_GET['page'] : 1;
 
-$blogs_per_page = 2;
+$products_per_page = 2;
 
-$total_blogs = Page::total_blogs($db);
+$total_products = Page::total_products($db);
 
-$pagination = new Pagination($page, $blogs_per_page, $total_blogs);
+$pagination = new Pagination($page, $products_per_page, $total_products);
 
 $sql = "SELECT * FROM pages ";
-$sql .= "Where page_type = 'blog_page' AND home_page = 'false' ";
-$sql .= "LIMIT {$blogs_per_page} ";
+$sql .= "Where page_type = 'product_page' AND home_page = 'false' ";
+$sql .= "LIMIT {$products_per_page} ";
 $sql .= "OFFSET {$pagination->offset()}";
 
-@$blog_pages = $db->query($sql);
+@$product_pages = $db->query($sql);
 
 
-if (!$blog_pages) {
-	$message = "There are no stub Wikis currently.";
+if (!$product_pages) {
+	$message = "There are no blogs currently for this site.";
 }
 
 ?>
@@ -38,28 +38,28 @@ if (!$blog_pages) {
 			<?php if (isset($message)) {
 				echo $message;
 			} else { ?>
-				<h2>Articles</h2>
+				<h2>Lists</h2>
 				<hr />
-				<?php while ($blog = $db->fetch_assoc_array($blog_pages)) { ?>
+				<?php while ($product = $db->fetch_assoc_array($product_pages)) { ?>
 					<div class="page_row clearfix">
 						<div class="page_images">
-							<?php if ($image_filename = Image::get_page_image($db, $blog["page_id"])) { ?>
-								<img src="public/img/<?php echo $image_filename ?>" alt="home_page_image" />
+							<?php if ($image_filename = Image::get_page_image($db, $product["page_id"])) { ?>
+								<img src="../public/img/<?php echo $image_filename ?>" alt="home_page_image" />
 							<?php } ?>
 						</div>
 						<div class="page_desc">
 							<h3>
-								<?php echo $blog["page_name"]; ?>
+								<?php echo $product["page_name"]; ?>
 							</h3>
 							<p>
-								<?php echo $blog["page_desc"]; ?>
+								<?php echo $product["page_desc"]; ?>
 							</p>
-							<p><a href="single_blog.php?id=<?php echo urlencode($blog['page_id']); ?>">Read More</a></p>
+							<p><a href="single_product.php?id=<?php echo urlencode($product['page_id']); ?>">Read More</a></p>
 						</div>
 					</div>
 					<hr />
 
-				<?php
+					<?php
 				}
 			}
 
@@ -69,7 +69,7 @@ if (!$blog_pages) {
 				if ($pagination->total_pages() > 1) {
 
 					if ($pagination->has_previous_page()) {
-						echo "<a href=\"blogs.php?page=";
+						echo "<a href=\"products.php?page=";
 						echo $pagination->previous_page();
 						echo "\">&laquo; Previous</a> ";
 					}
@@ -78,12 +78,12 @@ if (!$blog_pages) {
 						if ($i == $page) {
 							echo " <span class=\"selected\">{$i}</span> ";
 						} else {
-							echo " <a href=\"blogs.php?page={$i}\">{$i}</a> ";
+							echo " <a href=\"products.php?page={$i}\">{$i}</a> ";
 						}
 					}
 
 					if ($pagination->has_next_page()) {
-						echo " <a href=\"blogs.php?page=";
+						echo " <a href=\"products.php?page=";
 						echo $pagination->next_page();
 						echo "\">Next &raquo;</a> ";
 					}
@@ -95,5 +95,6 @@ if (!$blog_pages) {
 		</div>
 
 	</div>
+
 
 	<?php include("includes/footer.php"); ?>

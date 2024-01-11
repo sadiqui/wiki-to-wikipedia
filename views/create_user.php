@@ -28,10 +28,9 @@ if (isset($_POST['submit'])) {
 
 				} else {
 					$session->create_message("New user " . htmlspecialchars($_POST["username"]) . " with id " . $new_id . " created");
+					header("Location: log_in_user.php");
 
 				}
-
-
 
 			}
 		}
@@ -66,11 +65,9 @@ if (isset($_POST['submit'])) {
 						<label for="username">Username</label>
 					</div>
 					<div class="form_right">
-						<input name="username" type="text"
-							value="<?php if (isset($_POST['username'])) {
-								echo $_POST['username'];
-							} ?>"
-							id="username" />
+						<input name="username" type="text" value="<?php if (isset($_POST['username'])) {
+							echo $_POST['username'];
+						} ?>" id="username" />
 						<span class="error">
 							<?php if (isset($errors["username"])) {
 								echo $errors["username"];
@@ -98,10 +95,9 @@ if (isset($_POST['submit'])) {
 						<label for="email">Email</label>
 					</div>
 					<div class="form_right">
-						<input name="email" type="email"
-							value="<?php if (isset($_POST['email'])) {
-								echo $_POST['email'];
-							} ?>" id="email" />
+						<input name="email" type="email" value="<?php if (isset($_POST['email'])) {
+							echo $_POST['email'];
+						} ?>" id="email" />
 						<span class="error">
 							<?php if (isset($errors["email"])) {
 								echo $errors["email"];

@@ -1,4 +1,7 @@
-<?php include("includes/header.php"); ?>
+<?php
+include("includes/header.php");
+
+?>
 
 <?php
 
@@ -6,43 +9,29 @@ if (!isset($_SESSION['admin_user'])) {
     redirect_to("log_in_admin.php");
 }
 
-$db = new MySql_database();
-
-$admin = User::get_user($db, $_GET["id"]);
-
-
-if (!$admin) {
-
-    redirect_to("manage_admins.php");
-}
-
-?>
-
-<?php
 if (isset($_POST['submit'])) {
 
-
-    $required_fields = array("password", "email");
+    $required_fields = array("username", "password", "email");
 
     if (!$errors = Validator::validate_presences($required_fields)) {
 
-        $required_lengths = array("password" => "20", "email" => "50");
+        $required_lengths = array("username" => "20", "password" => "20", "email" => "50");
 
         if (!$errors = Validator::validate_max_lengths($required_lengths)) {
 
             if (!Validator::validate_email($_POST["email"])) {
                 $errors = array("email" => "Please enter valid email");
-
             } else {
                 $db = new MySql_database();
-                $updated = User::update_user($db, $_POST["password"], $_POST["email"], $admin->user_id);
-                $db->close_connection();
-
-                if ($updated) {
-                    $session->create_message("User " . $admin->username . " updated");
+                $new_id = User::create_user($db, $_POST["username"], $_POST["password"], $_POST["email"], "admin");
+                if (!$new_id) {
+                    $errors = array("username" => "Username is already in use");
+                    $db->close_connection();
+                } else {
+                    $session->create_message("New admin " . htmlspecialchars($_POST["username"]) . " with id " . $new_id . " created");
+                    $db->close_connection();
                     redirect_to("manage_admins.php");
                 }
-
             }
         }
 
@@ -55,7 +44,7 @@ if (isset($_POST['submit'])) {
 <div id="wrapper">
     <div id="header" class="clearfix">
         <div id="header_logo">
-            <img src="public/img/logo.png" alt="Wiki logo">
+            <img src="../public/img/logo.png" alt="Wiki logo">
         </div>
         <div id="admin_header_log_in" class="large">
             <p>Welcome
@@ -79,15 +68,29 @@ if (isset($_POST['submit'])) {
             </ul>
         </div>
         <div id="main_content">
-            <h2>Update admin user</h2>
-
-            <form action="edit_admin.php?id=<?php echo $admin->user_id ?>" method="post">
+            <?php
+            if (isset($new_id)) {
+                echo $new_id;
+            }
+            ?>
+            <h2>Create Admin</h2>
+            <form action="create_admin.php" method="post">
                 <div class="form_row clearfix">
                     <div class="form_left">
-                        <p for="username">Username</p>
+                        <label for="username">Username</label>
                     </div>
                     <div class="form_right">
-                        <?php echo $admin->username; ?>
+                        <input name="username" type="text"
+                            value="<?php if (isset($_POST['username'])) {
+                                echo $_POST['username'];
+                            } ?>"
+                            id="username" />
+                        <span class="error">
+                            <?php if (isset($errors["username"])) {
+                                echo $errors["username"];
+                            }
+                            ?>
+                        </span>
                     </div>
                 </div>
                 <div class="form_row clearfix">
@@ -109,7 +112,10 @@ if (isset($_POST['submit'])) {
                         <label for="email">Email</label>
                     </div>
                     <div class="form_right">
-                        <input name="email" type="email" value="<?php echo $admin->email; ?>" id="email" />
+                        <input name="email" type="email"
+                            value="<?php if (isset($_POST['email'])) {
+                                echo $_POST['email'];
+                            } ?>" id="email" />
                         <span class="error">
                             <?php if (isset($errors["email"])) {
                                 echo $errors["email"];
@@ -119,17 +125,10 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
 
-                <input type="submit" name="submit" value="Update Admin" />
+                <input type="submit" name="submit" value="Create Admin" />
             </form>
-
-
-            <br />
-            <a href="manage_admins.php">Cancel</a>
-
-
 
         </div>
     </div>
-
 
     <?php include("includes/footer.php"); ?>

@@ -203,7 +203,7 @@ class Image
 		}
 	}
 
-	//manual for resize http://php.net/manual/en/function.imagecreatefromgif.php
+	// manual for resize http://php.net/manual/en/function.imagecreatefromgif.php
 	public static function resize_gif($new_w, $new_h, $orig_w, $orig_h, $full_path)
 	{
 		$im = ImageCreateTrueColor($new_w, $new_h);

@@ -1,6 +1,6 @@
 <div id="header" class="clearfix">
 	    <div id="header_logo">
-		     <img src="public/img/logo.png" alt="Wiki logo" class="logo">
+		     <img src="../public/img/logo.png" alt="Wiki logo" class="logo">
 		</div>
 		<div id="user_header_log_in">
 		        <?php if ( isset ($_SESSION["user"]) ) { ?>

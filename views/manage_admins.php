@@ -16,7 +16,7 @@ $admin_set = User::find_all_admins($db);
 <div id="wrapper">
     <div id="header" class="clearfix">
         <div id="header_logo">
-            <img src="public/img/logo.png" alt="Wiki logo">
+            <img src="../public/img/logo.png" alt="Wiki logo">
         </div>
         <div id="admin_header_log_in" class="large">
             <p>Welcome

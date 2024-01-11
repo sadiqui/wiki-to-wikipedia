@@ -30,7 +30,7 @@ if (!$page) {
             </h2>
             <div id="page_image">
                 <?php if ($image_filename = Image::get_page_image($db, $page->page_id)) { ?>
-                    <img src="public/img/<?php echo $image_filename ?>" alt="home_page_image" />
+                    <img src="../public/img/<?php echo $image_filename ?>" alt="home_page_image" />
                 <?php } ?>
             </div>
             <div id="text_content">
