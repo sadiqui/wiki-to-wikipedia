@@ -63,7 +63,7 @@ Une section distincte devrait présenter les dernières catégories créées ou 
 
 En cliquant sur un wiki, les utilisateurs devraient être redirigés vers une page unique dédiée à ce wiki, offrant des détails complets tels que le contenu, les catégories associées, les tags et les informations sur l'auteur.
 
-## Technologies Requises
+## Technologies Utilisées
 
 - Frontend : HTML5, Framework CSS et JavaScript
 - Backend : PHP 8 avec une architecture MVC

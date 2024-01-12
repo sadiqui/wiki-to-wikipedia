@@ -125,8 +125,8 @@ class Category
 				throw new database_exception("Database query failed: ");
 			} else {
 				// Create and return user object using the database result
-				return $result->fetch_object('Category', array($id));
-
+				// return $result->fetch_object('Category', array($id));
+				return $result->fetchObject('Category', array($id));
 			}
 		} catch (database_exception $e) {
 			echo $e . "<br/>";

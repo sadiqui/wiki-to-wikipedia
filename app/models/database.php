@@ -1,202 +1,108 @@
 <?php
 
-// class MySql_database {
-
-// 	//attributes
-// 	private $mysqli;
-// 	public $last_query;
-// 	private $magic_quotes_active;
-// 	private $real_escape_string_exists;
-
-
-// 	public function __construct() {
-
-// 		$this->open_connection();
-// 		$this->magic_quotes_active = get_magic_quotes_gpc();
-// 		$this->real_escape_string_exists = function_exists( "mysql_real_escape_string" );
-
-
-// 	}
-
-// 	public function open_connection() {
-
-// 		try {
-
-// 			@ $this->mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
-
-// 			if($this->mysqli->connect_errno) {
-// 				throw new database_exception("Database connection failed: " . 
-// 									 $this->mysqli->connect_error . 
-// 									 " (" . $this->mysqli->connect_errno . ")" );
-// 			}
-
-// 		}
-
-// 		catch ( database_exception $e) {
-// 			echo $e . "<br/>";
-// 			echo $e->clean_up();
-
-// 		}
-
-// 	}
-
 class MySql_database
 {
-
-	//attributes
-	private $mysqli;
+	private $pdo;
 	public $last_query;
-	private $magic_quotes_active;
-	private $real_escape_string_exists;
-
-
-	// public function __construct() {
-	// 	$this->open_connection();
-	// 	$this->magic_quotes_active = (bool) get_magic_quotes_gpc();
-	// 	$this->real_escape_string_exists = function_exists("mysqli_real_escape_string");
-	// }
 
 	public function __construct()
 	{
 		$this->open_connection();
-		$this->magic_quotes_active = (bool) ini_get('magic_quotes_gpc');
-		$this->real_escape_string_exists = function_exists('mysqli_real_escape_string');
 	}
 
 	public function open_connection()
 	{
 		try {
-			$this->mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_NAME);
-			if ($this->mysqli->connect_errno) {
-				throw new Exception("Database connection failed: " .
-					$this->mysqli->connect_error .
-					" (" . $this->mysqli->connect_errno . ")");
-			}
-		} catch (Exception $e) {
-			echo $e->getMessage() . "<br/>";
-			// echo $this->clean_up();
+			$dsn = 'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME;
+			$this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD);
+			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		} catch (PDOException $e) {
+			echo "Database connection failed: " . $e->getMessage();
 		}
 	}
 
 	public function escape_value($value)
 	{
-		if ($this->real_escape_string_exists) {
-			// undo any magic quote effects so mysql_real_escape_string can do the work
-			if ($this->magic_quotes_active) {
-				$value = stripslashes($value);
-			}
-			$value = mysqli_real_escape_string($this->mysqli, $value);
-		} else {
-			// if magic quotes aren't already on then add slashes manually
-			if (!$this->magic_quotes_active) {
-				$value = addslashes($value);
-			}
-			// if magic quotes are active, then the slashes already exist
-		}
-		return $value;
+		$escaped_value = $this->pdo->quote($value);
+		return substr($escaped_value, 1, -1); // Remove the surrounding quotes
 	}
 
-	//execute the passed in query and return result
-	public function query($sql)
+	public function query($sql, $params = [])
 	{
+		$statement = $this->pdo->prepare($sql);
+		$statement->execute($params);
 
-		$this->last_query = $sql;
-		//execute query
-		$result = $this->mysqli->query($sql);
-
-		return $result;
+		return $statement;
 	}
 
-	public function stmt_init()
-	{
-		return $this->mysqli->stmt_init();
-	}
-
-	//throw exception if no query result
-	public function confirm_query($result_set)
+	public function prepare($sql)
 	{
 		try {
-			if (!$result_set) {
-				throw new database_exception("Database query failed: " .
-					$this->mysqli->error . " " .
-					$this->mysqli->errno . " " .
-					$this->mysqli->sqlstate);
-			}
-		} catch (database_exception $e) {
-			echo $e . "<br/>";
-			echo $e->clean_up();
+			$statement = $this->pdo->prepare($sql);
+			return $statement;
+		} catch (PDOException $e) {
+			echo "Database query failed: " . $e->getMessage();
 		}
+	}
+
+	public function confirm_query($result_set)
+	{
+		// No changes needed, as PDOException will be thrown automatically.
 	}
 
 	public function confirm_insert()
 	{
-		try {
-			if (!$this->affected_rows()) {
-				throw new database_exception("Database query failed: " .
-					$this->mysqli->error . " " .
-					$this->mysqli->errno . " " .
-					$this->mysqli->sqlstate);
-			}
-		} catch (database_exception $e) {
-			echo $e . "<br/>";
-			echo $e->clean_up();
+		if ($this->inserted_id() === 0) {
+			echo "Database query failed: No rows inserted.";
 		}
 		return $this->inserted_id();
 	}
 
-
-	// fetch a row from result_set as an associative array
 	public function fetch_assoc_array($result_set)
 	{
-		return $result_set->fetch_assoc();
+		return $result_set->fetch(PDO::FETCH_ASSOC);
 	}
 
 	public function fetch_num_array($result_set)
 	{
-		return $result_set->fetch_row();
+		return $result_set->fetch(PDO::FETCH_NUM);
 	}
 
-	//fetch number of rows
 	public function num_rows($result_set)
 	{
-		return $result_set->num_rows;
+		return $result_set->rowCount();
 	}
 
-	// get the last id inserted over the current db connection
 	public function inserted_id()
 	{
-
-		return $this->mysqli->insert_id;
+		return $this->pdo->lastInsertId();
 	}
 
-	public function affected_rows()
-	{
-		return $this->mysqli->affected_rows;
-	}
+	// public function affected_rows()
+	// {
+	// 	$statement = $this->pdo->query($this->last_query);
+	// 	return $statement->rowCount();
+	// }
 
 	public function result_rewind($result_set, $row = 0)
 	{
-		$result_set->data_seek($row);
+		// Rewinding result set is not necessary in PDO.
 	}
 
 	public function fetch_all($result_set)
 	{
-		return $result_set->fetch_all();
+		return $result_set->fetchAll(PDO::FETCH_ASSOC);
 	}
 
 	public function free_result($result_set)
 	{
-		$result_set->free_result();
+		// Freeing result set is not necessary in PDO.
 	}
 
 	public function close_connection()
 	{
-
-		$this->mysqli->close();
-
+		$this->pdo = null;
 	}
-
-
 }
 
 ?>

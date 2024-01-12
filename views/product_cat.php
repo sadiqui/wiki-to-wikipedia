@@ -14,15 +14,14 @@ $total_products = Page::total_products_by_cat($db, $cat_id);
 $pagination = new Pagination($page, $products_per_page, $total_products);
 
 $sql = "SELECT * FROM pages ";
-$sql .= "Where page_type = 'product_page' AND home_page = 'false' AND cat_id = {$cat_id} ";
+$sql .= "Where home_page = 'false' AND cat_id = {$cat_id} ";
 $sql .= "LIMIT {$products_per_page} ";
 $sql .= "OFFSET {$pagination->offset()}";
 
-@$product_pages = $db->query($sql);
+$product_pages = $db->query($sql);
 
-
-if (!$product_pages) {
-	$message = "There are no blogs currently for this site.";
+if ($product_pages->rowCount() === 0) {
+    $message = "There are no wikis currently in this category.";
 }
 
 ?>
@@ -51,7 +50,7 @@ if (!$product_pages) {
 					<div class="page_row clearfix">
 						<div class="page_images">
 							<?php if ($image_filename = Image::get_page_image($db, $product["page_id"])) { ?>
-								<img src="public/img/<?php echo $image_filename ?>" alt="home_page_image" />
+								<img src="../public/img/<?php echo $image_filename ?>" alt="home_page_image" />
 							<?php } ?>
 						</div>
 						<div class="page_desc">
@@ -102,6 +101,5 @@ if (!$product_pages) {
 		</div>
 
 	</div>
-
 
 	<?php include("includes/footer.php"); ?>

@@ -63,7 +63,7 @@ A separate section should present the latest created or updated categories, allo
 
 When clicking on a wiki, users should be redirected to a dedicated single page for that wiki, providing comprehensive details such as content, associated categories, tags, and author information.
 
-## Required Technologies
+## Used Technologies
 
 - Frontend: HTML5, CSS Framework, and JavaScript
 - Backend: PHP 8 with an MVC architecture

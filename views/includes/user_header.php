@@ -2,6 +2,10 @@
 	    <div id="header_logo">
 		     <img src="../public/img/logo.png" alt="Wiki logo" class="logo">
 		</div>
+		<div class="intro">
+			<h1>Wiki, encyclopedic articles and lists<br>
+				<br>that everyone can contribute in !</h1>
+		</div>
 		<div id="user_header_log_in">
 		        <?php if ( isset ($_SESSION["user"]) ) { ?>
 
@@ -21,5 +25,4 @@
 				</div>
 				<?php } ?>
 		</div>
-
 	</div>

@@ -14,7 +14,7 @@
     <title> Wiki</title>
 
     <!-- Search engine optimization -->
-    <meta name="keywords" content="wikipedia knowledge source" />
+    <meta name="keywords" content="wikipedia, knowledge, source" />
     <meta name="description" content="Collaborative free encyclopedia" />
 
     <!-- general information about the site creator and creation -->

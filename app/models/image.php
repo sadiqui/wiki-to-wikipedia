@@ -83,17 +83,35 @@ class Image
 		}
 	}
 
+	// public static function exist_file($image_file)
+	// {
+	// 	if ($dir_handle = opendir("uploads" . DS . "images")) {
+	// 		while ($filename = readdir($dir_handle)) {
+	// 			if ($filename == $image_file) {
+	// 				return true;
+	// 			}
+	// 		}
+	// 	}
+
+	// 	closedir($dir_handle);
+
+	// 	return false;
+	// }
+
 	public static function exist_file($image_file)
 	{
-		if ($dir_handle = opendir("uploads" . DS . "images")) {
+		$dir_handle = opendir("uploads" . DS . "images");
+
+		if ($dir_handle) {
 			while ($filename = readdir($dir_handle)) {
 				if ($filename == $image_file) {
+					closedir($dir_handle);
 					return true;
 				}
 			}
-		}
 
-		closedir($dir_handle);
+			closedir($dir_handle);
+		}
 
 		return false;
 	}
@@ -148,8 +166,8 @@ class Image
 				throw new database_exception("Database query failed");
 			} else {
 				// Create and return user object using the database result
-				return $result->fetch_object('Image', array($id));
-
+				// return $result->fetch_object('Image', array($id));
+				return $result->fetchObject('Image', array($id));
 			}
 		} catch (database_exception $e) {
 			echo $e . "<br/>";

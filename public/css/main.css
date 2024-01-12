@@ -49,6 +49,10 @@ input {
 	font-size: large;
 }
 
+.larger {
+	font-size: larger;
+}
+
 #wrapper {
 	width: 100%;
 	margin: 0 auto;
@@ -178,6 +182,10 @@ Admin pages
 	float: left;
 }
 
+.com_right {
+	float: left;
+}
+
 .error {
 	color: #ff0000;
 }
@@ -245,6 +253,24 @@ Admin pages
 /************
 User pages
 **************/
+.intro {
+	float: left;
+	margin-left: 30px;
+	margin-top: 50px;
+}
+
+.intro h1 {
+	display: inline-block;
+	text-align: center;
+}
+
+#user_header_log_in {
+	float: right;
+	margin-right: 30px;
+	margin-top: 30px;
+	line-height: 3em;
+}
+
 #search_box {
 	margin-bottom: 20px;
 	text-align: center;
@@ -260,11 +286,9 @@ User pages
 	margin-right: -5px;
 }
 
-#user_header_log_in {
-	float: right;
-	margin-right: 30px;
-	margin-top: 30px;
-	line-height: 3em;
+.create {
+	margin-left: 100px;
+	margin-right: 10px;
 }
 
 #main_content {
@@ -272,7 +296,7 @@ User pages
 }
 
 #main_content h2 {
-	text-align: center;
+	text-align: left;
 	margin-bottom: 30px;
 	font-size: 2em;
 	font-weight: bold;
@@ -280,6 +304,7 @@ User pages
 
 #user_navigation {
 	text-align: center;
+	margin-right: 100px;
 }
 
 #user_navigation ul {
@@ -336,9 +361,45 @@ Home Page
 
 }
 
-/************
-Blogs Page
-**************/
+.wiki-metadata {
+	display: table;
+	float: right;
+	max-width: 500px;
+}
+
+.wiki-pic {
+	display: block;
+	margin: 0 auto;
+	width: 300px;
+	height: auto;
+}
+
+.wiki-table td {
+	border: 0;
+}
+
+.wiki-metadata {
+	margin-left: 2em;
+	background-color: #ededed;
+	border: 1px solid #112a3b;
+}
+
+.wiki-metadata h3 {
+	background-color: #112a3b;
+	color: #fff;
+	text-align: center;
+	display: block;
+	padding: 10px;
+}
+
+.wiki-table tr td:nth-child(1) {
+	font-weight: bold;
+	padding-right: 0.5em;
+}
+
+/*****
+Wiki
+*******/
 .page_row {
 	margin-top: 20px;
 	margin-bottom: 20px;
@@ -399,6 +460,10 @@ Blogs Page
 	padding-right: 30px;
 }
 
+#text_content {
+	line-height: 1.4;
+}
+
 #text_content ul li {
 	list-style-type: circle;
 }
@@ -411,10 +476,6 @@ Blogs Page
 	font-weight: bold;
 }
 
-
-/************
-Products Page
-**************/
 .cat_item {
 	float: left;
 	width: 30%;

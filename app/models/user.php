@@ -211,8 +211,8 @@ class User
 				throw new database_exception("Database query failed: ");
 			} else {
 				// Create and return user object using the database result
-				return $result->fetch_object('User', array($id));
-
+				// return $result->fetch_object('User', array($id));
+				return $result->fetchObject('User', array($id));
 			}
 		} catch (database_exception $e) {
 			echo $e . "<br/>";
@@ -237,8 +237,8 @@ class User
 				throw new database_exception("Database query failed: ");
 			} else {
 				// Create and return user object using the database result
-				return $result->fetch_object('User', array($username));
-
+				// return $result->fetch_object('User', array($username));
+				return $result->fetchObject('User', array($username));
 			}
 		} catch (database_exception $e) {
 			echo $e . "<br/>";

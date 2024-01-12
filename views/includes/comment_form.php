@@ -51,25 +51,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             ?>
         </p>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $page->page_id; ?>" method="post">
-
             <div class="form_row clearfix">
                 <div class="form_left">
-                    <label for="comment">Comment</label>
-                </div>
-                <div class="form_right">
-                    <textarea name="comment" rows="15" cols="35"
-                              id="comment"><?php if (isset($_POST['comment']) && isset($errors["comment"])) {
-                            echo $_POST['comment'];
-                        } ?></textarea>
+                    <label for="comment"> </label>
+                    <textarea name="comment" rows="2" cols="48" id="comment" placeholder=" Comment"><?php if (isset($_POST['comment']) && isset($errors["comment"])) {
+                        echo $_POST['comment'];
+                    } ?></textarea>
                     <span class="error">
                         <?php if (isset($errors["comment"])) {
                             echo $errors["comment"];
                         } ?>
                     </span>
                 </div>
+                <div class="com_right">
+                    <input type="submit" name="submit" value="Add Comment" />
+                </div>
             </div>
-
-            <input type="submit" name="submit" value="Add Comment" />
         </form>
     <?php } ?>
 </div>
@@ -81,13 +78,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     while ($comment = $db->fetch_assoc_array($page_comments)) { ?>
         <div class="single_comment">
             <p class="comment_meta">
-                <span class="comment_user">Posted By: <?php echo $comment["username"]; ?></span>
-                <span>Posted On: <?php $created_date = datetime_to_text($comment["created"]);
-                    echo $created_date; ?></span>
+                <span class="comment_user">Posted By:
+                    <?php echo $comment["username"]; ?>
+                </span>
+                <span>Posted On:
+                    <?php $created_date = datetime_to_text($comment["created"]);
+                    echo $created_date; ?>
+                </span>
             </p>
-            <p><?php echo htmlspecialchars($comment["content"]); ?></p>
+            <p>
+                <?php echo htmlspecialchars($comment["content"]); ?>
+            </p>
             <?php if (isset($_SESSION["admin_user"])) { ?>
-                <a href="delete_comment.php?comment_id=<?php echo $comment["comment_id"]; ?>&page=<?php echo $_SERVER['PHP_SELF']; ?>&page_id=<?php echo $page->page_id; ?>">DELETE COMMENT</a>
+                <a
+                    href="delete_comment.php?comment_id=<?php echo $comment["comment_id"]; ?>&page=<?php echo $_SERVER['PHP_SELF']; ?>&page_id=<?php echo $page->page_id; ?>">DELETE
+                    COMMENT</a>
             <?php } ?>
         </div>
         <hr />

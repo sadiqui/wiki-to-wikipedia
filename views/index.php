@@ -31,14 +31,34 @@ if (!$home_page_id) {
 				echo $message;
 			} else { ?>
 				<h2>
-					<?php echo $page->page_name; ?>
+					Featured Article
 				</h2>
-				<div id="page_image">
+				<!-- <div id="page_image">
 					<?php if ($image_filename = Image::get_page_image($db, $home_page_id)) { ?>
 						<img src="../public/img/<?php echo $image_filename ?>" alt="home_page_image" />
 					<?php } ?>
-				</div>
+				</div> -->
 				<div id="text_content">
+					<div class="wiki-metadata">
+						<h3>YouCode</h3>
+						<img src="../public/img/youcode.jpg" class="wiki-pic" />
+						<table class="wiki-table">
+							<tr>
+								<td>Created by</td>
+								<td>OCP Morocco</td>
+							</tr>
+							<tr>
+								<td>Opened in</td>
+								<td>2018 Youssoufia</td>
+							</tr>
+							<tr>
+								<td>Other Campuses</td>
+								<td>Safi and Nador</td>
+							</tr>
+						</table>
+					</div>
+					<strong class="larger"><?php echo $page->page_name; ?></strong>
+					<?php echo $page->page_desc; ?><br>
 					<?php echo $page->page_content; ?>
 				</div>
 

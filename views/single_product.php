@@ -10,7 +10,6 @@ if (!$page) {
 
     redirect_to("products.php");
 
-
 }
 
 ?>
